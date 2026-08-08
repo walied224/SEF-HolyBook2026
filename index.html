@@ -162,6 +162,207 @@ h3{
 
 
 /* =========================================================
+   SECTION 0 — INTRO VIDEO
+========================================================= */
+
+.intro-video-section{
+
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:22px;
+
+    padding:
+        calc(60px + 45px)
+        5vw
+        60px;
+
+    overflow:hidden;
+
+    background:
+
+        radial-gradient(
+            60% 50% at 50% 30%,
+            rgba(201,162,39,.10),
+            transparent 70%
+        ),
+
+        linear-gradient(
+            160deg,
+            #1b1108 0%,
+            #17100a 100%
+        );
+}
+
+
+.intro-video-section .eyebrow{
+    position:relative;
+    z-index:1;
+}
+
+
+.intro-video-section h1{
+
+    position:relative;
+
+    z-index:1;
+
+    font-size:
+        clamp(2rem,4.4vw,3rem);
+
+    color:var(--parchment);
+
+    text-align:center;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.6);
+}
+
+
+.intro-video-frame{
+
+    position:relative;
+
+    z-index:1;
+
+    width:min(880px,92vw);
+
+    aspect-ratio:16/9;
+
+    border-radius:18px;
+
+    padding:6px;
+
+    background:
+
+        conic-gradient(
+            from 220deg,
+            var(--gold-bright),
+            var(--gold),
+            #8a6a1c,
+            var(--gold-bright)
+        );
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.6);
+}
+
+
+.intro-video{
+
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    border-radius:14px;
+
+    background:#000;
+
+    object-fit:cover;
+}
+
+
+.intro-video-fallback{
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:100%;
+    height:100%;
+
+    border-radius:14px;
+
+    text-align:center;
+
+    padding:20px;
+
+    font-size:.95rem;
+
+    color:#cbb98a;
+
+    background:
+
+        radial-gradient(
+            50% 60% at 50% 30%,
+            rgba(201,162,39,.14),
+            transparent 70%
+        ),
+
+        linear-gradient(
+            180deg,
+            #1a1109,
+            #0e0906 70%
+        );
+}
+
+
+.intro-video-frame.video-failed .intro-video{
+    display:none;
+}
+
+
+.intro-video-frame.video-failed .intro-video-fallback{
+    display:flex;
+}
+
+
+.intro-scroll-hint{
+
+    position:relative;
+
+    z-index:1;
+
+    font-size:.85rem;
+
+    color:var(--wood-highlight);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:6px;
+
+    animation:
+        bob-simple 2.4s ease-in-out infinite;
+}
+
+
+.intro-scroll-hint a{
+
+    color:inherit;
+
+    text-decoration:none;
+}
+
+
+@keyframes bob-simple{
+
+    0%,
+    100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(8px);
+    }
+}
+
+
+/* =========================================================
    SECTION 1 — DAWOOD
 ========================================================= */
 
@@ -1472,6 +1673,26 @@ h3{
     }
 
 
+    /* فيديو المقدمة */
+
+    .intro-video-section{
+
+        padding:
+            calc(46px + 56px)
+            5vw
+            50px;
+
+        gap:18px;
+    }
+
+
+    .intro-video-frame{
+        width:94vw;
+    }
+
+
+    /* الهيرو */
+
     .hero{
 
         padding-top:
@@ -1644,6 +1865,16 @@ h3{
 
 @media(max-width:400px){
 
+    .intro-video-section h1{
+        font-size:1.7rem;
+    }
+
+
+    .intro-video-frame{
+        width:96vw;
+    }
+
+
     .hero{
 
         padding-left:15px;
@@ -1726,6 +1957,66 @@ h3{
     </h2>
 
 </header>
+
+
+
+<!-- =========================================================
+     SECTION 0 — INTRO VIDEO
+========================================================= -->
+
+<section
+    class="intro-video-section"
+    id="intro-video">
+
+
+    <span class="eyebrow">
+        قبل ما نبدأ
+    </span>
+
+
+    <h1>
+        شاهد الأنترو   
+    </h1>
+
+
+    <div
+        class="intro-video-frame"
+        id="introVideoFrame">
+
+
+        <video
+            class="intro-video"
+            id="introVideo"
+            controls
+            playsinline
+            preload="metadata">
+
+
+            <source
+                src="background.mp4"
+                type="video/mp4">
+
+
+        </video>
+
+
+        <div class="intro-video-fallback">
+            الفيديو مش متاح دلوقتي، تقدر تكمل القراءة تحت 🙂
+        </div>
+
+
+    </div>
+
+
+    <div class="intro-scroll-hint">
+
+        <a href="#hero">
+            مرر لباقي المحتوى ↓
+        </a>
+
+    </div>
+
+</section>
 
 
 
@@ -2111,6 +2402,51 @@ function markMissing(img){
     }
 
 }
+
+
+
+/* =========================================================
+   INTRO VIDEO
+========================================================= */
+
+const introVideo =
+    document.getElementById(
+        'introVideo'
+    );
+
+
+const introVideoFrame =
+    document.getElementById(
+        'introVideoFrame'
+    );
+
+
+introVideo.addEventListener(
+    'error',
+    () => {
+
+        introVideoFrame.classList.add(
+            'video-failed'
+        );
+
+    }
+);
+
+
+setTimeout(
+    () => {
+
+        if(introVideo.readyState === 0){
+
+            introVideoFrame.classList.add(
+                'video-failed'
+            );
+
+        }
+
+    },
+    1500
+);
 
 
 
@@ -2604,7 +2940,7 @@ const characters = [
 
         img:'samuel.jpeg',
 
-        audio:'samuel.mpeg',
+        audio:'/samuel.mpeg',
 
         freq:196,
 
@@ -2628,7 +2964,7 @@ const characters = [
 
         img:'nathan.jpeg',
 
-        audio:'nathan.mpeg',
+        audio:'/nathan.mpeg',
 
         freq:220,
 
@@ -2651,7 +2987,7 @@ const characters = [
 
         img:'shawl.jpeg',
 
-        audio:'shawel.mpeg',
+        audio:'/shawel.mpeg',
 
         freq:246,
 
@@ -2677,7 +3013,7 @@ const characters = [
 
         img:'younathan.jpeg',
 
-        audio:'younathan.mpeg',
+        audio:'/younathan.mpeg',
 
         freq:261,
 
@@ -2699,7 +3035,7 @@ const characters = [
 
         img:'mickal.jpeg',
 
-        audio:'mickal.mpeg',
+        audio:'/mickal.mpeg',
 
         freq:293,
 
@@ -2724,7 +3060,7 @@ const characters = [
 
         img:'a5imalk.jpeg',
 
-        audio:'a5imalk.mpeg',
+        audio:'/a5imalk.mpeg',
 
         freq:329,
 
@@ -2750,7 +3086,7 @@ const characters = [
 
         img:'youaab.jpeg',
 
-        audio:'youaab.mpeg',
+        audio:'/youaab.mpeg',
 
         freq:369,
 
